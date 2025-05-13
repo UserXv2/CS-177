@@ -1,0 +1,156 @@
+<!-- <!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Task Creator</title>
+  <style>
+    body { font-family: sans-serif; padding: 2rem; }
+    input, select { display: block; margin-bottom: 1rem; padding: 0.5rem; }
+  </style>
+</head>
+<body>
+  <h1>Create a Task</h1>
+  <form action="/add-task" method="POST">
+    <label>Type: <input type="text" name="title" required></label>
+    <label>Start Date: <input type="date" name="startDate" required></label>
+    <label>End Date: <input type="date" name="endDate" required></label>
+    <label>flexibility (0-10): <input type="number" name="flexibility" min="0" max="10" required></label>
+    <button type="submit">Create Task</button>
+  </form>
+</body>
+</html> -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Task Input Form</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 2rem;
+      background-color: #f4f4f4;
+    }
+    form {
+      background: white;
+      padding: 1.5rem;
+      border-radius: 8px;
+      max-width: 500px;
+      margin: auto;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+    label {
+      display: block;
+      margin: 0.5rem 0 0.2rem;
+    }
+    input[type="text"],
+    input[type="number"],
+    input[type="date"],
+    input[type="time"],
+    textarea {
+      width: 100%;
+      padding: 0.5rem;
+      border-radius: 4px;
+      border: 1px solid #ccc;
+      margin-bottom: 0.5rem;
+    }
+    input[type="range"] {
+      width: 100%;
+    }
+    .color-preview {
+      height: 40px;
+      margin-top: 0.5rem;
+      border-radius: 4px;
+      border: 1px solid #ccc;
+    }
+    button {
+      margin-top: 1rem;
+      padding: 0.6rem 1.2rem;
+      background: #007BFF;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+    button:hover {
+      background: #0056b3;
+    }
+    recurrs {
+      display: flex;
+    }
+  </style>
+</head>
+<body>
+
+  <form id="taskForm" action="/add-task" method="POST">
+    <h2>Task Input</h2>
+
+    <label for="type">Category Type</label>
+    <input type="text" id="type" name="type" required>
+
+    <label for="red">Red: <span id="redVal">0</span></label>
+    <input type="range" id="red" name="red" value="0" min="0" max="255">
+
+    <label for="green">Green: <span id="greenVal">0</span></label>
+    <input type="range" id="green" name="green" value="0" min="0" max="255">
+
+    <label for="blue">Blue: <span id="blueVal">0</span></label>
+    <input type="range" id="blue" name="blue" value="0" min="0" max="255">
+
+    <div class="color-preview" id="colorPreview"></div>
+
+    <label for="flexibility">Flexibility</label>
+    <input type="number" id="flexibility" name="flexibility" value="5" min="0">
+
+    <label for="details">Details</label>
+    <textarea id="details" name="details">No Extra Details</textarea>
+
+    <label for="startDate">Start Date</label>
+    <input type="date" id="startDate" name="startDate" required>
+
+    <label for="endDate">End Date</label>
+    <input type="date" id="endDate" name="endDate" required>
+
+    <label for="startTime">Start Time</label>
+    <input type="time" id="startTime" name="startTime" required>
+
+    <label for="endTime">End Time</label>
+    <input type="time" id="endTime" name="endTime" required>
+
+    <label for="progress">Progress</label>
+    <input type="number" id="progress" name="progress" value="0" min="0" max="100">
+
+    <recurrs>
+      <label for="recurrs">Recurrs</label>
+      <input type="checkbox" id="recurrs" name="recurrs">
+    </recurrs>
+
+    <button type="submit">Submit</button>
+  </form>
+
+  <script>
+    const red = document.getElementById('red');
+    const green = document.getElementById('green');
+    const blue = document.getElementById('blue');
+    const redVal = document.getElementById('redVal');
+    const greenVal = document.getElementById('greenVal');
+    const blueVal = document.getElementById('blueVal');
+    const preview = document.getElementById('colorPreview');
+
+    function updateColor() {
+      redVal.textContent = red.value;
+      greenVal.textContent = green.value;
+      blueVal.textContent = blue.value;
+      preview.style.backgroundColor = `rgb(${red.value}, ${green.value}, ${blue.value})`;
+    }
+
+    red.addEventListener('input', updateColor);
+    green.addEventListener('input', updateColor);
+    blue.addEventListener('input', updateColor);
+
+    updateColor(); // Initialize on load
+  </script>
+
+</body>
+</html>
+

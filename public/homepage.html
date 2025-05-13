@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>PESP Dashboard</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      height: 100vh;
+      overflow: hidden;
+    }
+
+    header {
+      background-color: #a59c66;
+      color: black;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 10px 20px;
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 50px;
+      z-index: 10;
+    }
+
+    header .left-buttons {
+      display: flex;
+      gap: 10px;
+    }
+
+    header button {
+      background-color: white;
+      border: none;
+      padding: 10px 15px;
+      cursor: pointer;
+    }
+
+    .container {
+      display: flex;
+      width: 100%;
+      margin-top: 50px;
+      height: calc(100% - 50px);
+    }
+
+    .left-panel {
+      background-color: #5e854f;
+      width: 20%;
+      padding: 10px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .left-panel select, .left-panel button {
+      padding: 5px;
+      margin-bottom: 10px;
+    }
+
+    .task {
+      background-color: #ccc;
+      padding: 8px;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    .task.dark {
+      background-color: #333;
+      color: white;
+    }
+
+    .middle-panel {
+      background-color: #fff;
+      width: 60%;
+      padding: 20px;
+      text-align: center;
+    }
+
+    .middle-panel button {
+      padding: 15px 30px;
+      margin: 15px;
+      background-color: lightgray;
+      border: none;
+      border-radius: 25px;
+      font-size: 16px;
+    }
+
+    .menu-toggle {
+      font-size: 24px;
+      background-color: transparent;
+      border: none;
+      cursor: pointer;
+    }
+
+    .right-panel {
+      position: fixed;
+      top: 50px;
+      right: 0;
+      width: 200px;
+      background-color: #b18450;
+      padding: 20px;
+      display: none;
+      flex-direction: column;
+      gap: 15px;
+      height: calc(100% - 50px);
+      z-index: 9;
+    }
+
+    .menu-item {
+      background-color: white;
+      border: none;
+      padding: 12px;
+      border-radius: 20px;
+      text-align: left;
+      font-size: 16px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      cursor: pointer;
+    }
+
+    .menu-item i {
+      font-style: normal;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <div class="left-buttons">
+      <button><strong>PESP</strong></button>
+      <button>Sign in / log in</button>
+      <button>Home</button>
+    </div>
+    <button class="menu-toggle" onclick="toggleMenu()">☰</button>
+  </header>
+
+  <div class="container">
+    <!-- Left Panel -->
+    <div class="left-panel">
+      <select>
+        <option>Sort By: Day, Name, etc...</option>
+      </select>
+      <button>Recurring, One time, etc...</button>
+      <div><strong>Category 1/Date/Name/...</strong></div>
+      <div class="task">Task1</div>
+      <div><strong>Category 2/Date/Name/...</strong></div>
+      <div class="task">Task2</div>
+      <div class="task">Task3</div>
+      <div><strong>Category 3/Date/Name/...</strong></div>
+      <div class="task dark">Task4</div>
+      <div class="task dark">Task5</div>
+      <div><strong>Category 4/Date/Name/...</strong></div>
+      <div class="task">Task6</div>
+      <div class="task">Task7</div>
+      <button>Rank</button>
+      <button>Category Management</button>
+    </div>
+
+    <!-- Middle Panel -->
+    <div class="middle-panel">
+      <h2>Welcome *User/Guest*</h2>
+      <p>What would you like to do</p>
+      <button>First Time here (tutorial)</button>
+      <button>Import data from somewhere else?</button>
+    </div>
+  </div>
+
+  <!-- Right Dropdown Menu -->
+  <div class="right-panel" id="rightMenu">
+    <button class="menu-item"><i>🏠</i> Home</button>
+    <button class="menu-item"><i>⚙️</i> Settings</button>
+    <button class="menu-item"><i>ℹ️</i> Tips</button>
+    <button class="menu-item"><i>💬</i> Feedback</button>
+    <button class="menu-item"><i>❓</i> Help</button>
+    <button class="menu-item"><i>📅</i> Calendar</button>
+  </div>
+
+  <script>
+    function toggleMenu() {
+      const menu = document.getElementById('rightMenu');
+      menu.style.display = menu.style.display === 'flex' ? 'none' : 'flex';
+    }
+  </script>
+
+</body>
+</html>

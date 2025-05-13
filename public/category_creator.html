@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Create Category - PESP</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      height: 100vh;
+      overflow-x: hidden;
+    }
+
+    header {
+      background-color: #a59c66;
+      color: black;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 10px 20px;
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 50px;
+      z-index: 10;
+    }
+
+    header .left-buttons {
+      display: flex;
+      gap: 10px;
+      align-items: center;
+    }
+
+    header button {
+      background-color: white;
+      border: none;
+      padding: 10px 15px;
+      cursor: pointer;
+    }
+
+    .menu-toggle {
+      font-size: 24px;
+      background-color: transparent;
+      border: none;
+      cursor: pointer;
+    }
+
+    .creator-panel {
+      margin-top: 70px;
+      padding: 30px 20px;
+    }
+
+    .form-row {
+      margin: 20px 0;
+    }
+
+    .input-box {
+      background-color: #ddd;
+      border-radius: 25px;
+      padding: 12px 20px;
+      display: inline-block;
+      min-width: 200px;
+      margin-left: 10px;
+    }
+
+    textarea {
+      width: 100%;
+      max-width: 800px;
+      height: 150px;
+      background-color: #ddd;
+      border: none;
+      border-radius: 20px;
+      padding: 15px;
+      font-size: 16px;
+    }
+
+    .wide-box {
+      background-color: #ddd;
+      border-radius: 25px;
+      padding: 12px 20px;
+      margin-top: 10px;
+      max-width: 800px;
+    }
+
+    .form-buttons {
+      display: flex;
+      justify-content: flex-end;
+      gap: 20px;
+      margin-top: 30px;
+    }
+
+    .form-buttons button {
+      padding: 10px 25px;
+      font-size: 16px;
+      border: none;
+      background-color: #eee;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    .footer-code {
+      margin-top: 50px;
+      text-align: right;
+      font-family: monospace;
+      color: #333;
+      padding: 10px 20px;
+    }
+
+    .right-panel {
+      position: fixed;
+      top: 50px;
+      right: 0;
+      width: 200px;
+      background-color: #b18450;
+      padding: 20px;
+      display: none;
+      flex-direction: column;
+      gap: 15px;
+      height: calc(100% - 50px);
+      z-index: 9;
+    }
+
+    .menu-item {
+      background-color: white;
+      border: none;
+      padding: 12px;
+      border-radius: 20px;
+      text-align: left;
+      font-size: 16px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      cursor: pointer;
+    }
+
+    .menu-item i {
+      font-style: normal;
+    }
+
+    .color-preview {
+      width: 100%;
+      height: 40px;
+      border-radius: 4px;
+      margin-top: 10px;
+      border: 1px solid #ccc;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <div class="left-buttons">
+      <button><strong>PESP</strong></button>
+      <button>Sign in / log in</button>
+      <button>Home</button>
+    </div>
+    <button class="menu-toggle" onclick="toggleMenu()">☰</button>
+  </header>
+
+  <form action="/add_category" method="POST">
+    <div class="creator-panel">
+
+      <div class="form-row">
+        <strong>Category Name</strong>
+        <input type="text" class="input-box" name="cType" placeholder="Category name" required>
+      </div>
+
+      <div class="form-row">
+        <strong>Pre-determined Urgency (1–10)<br>(Override when editing Tasks)</strong>
+        <input type="number" class="input-box" name="flex" min="1" max="10" value="5">
+      </div>
+
+      <div class="form-row">
+        <textarea name="description" placeholder="Description"></textarea>
+      </div>
+
+      <div class="form-row">
+        <input type="text" class="wide-box" name="tasks" placeholder="Tasks">
+      </div>
+
+      <div class="form-row">
+        <strong>Color (RGB)</strong>
+
+        <div class="range-label">
+          <label for="red">Red: <span id="redVal">128</span></label>
+        </div>
+        <input type="range" name="red" id="red" min="0" max="255" value="128" oninput="updateColorPreview()">
+
+        <div class="range-label">
+          <label for="green">Green: <span id="greenVal">128</span></label>
+        </div>
+        <input type="range" name="green" id="green" min="0" max="255" value="128" oninput="updateColorPreview()">
+
+        <div class="range-label">
+          <label for="blue">Blue: <span id="blueVal">128</span></label>
+        </div>
+        <input type="range" name="blue" id="blue" min="0" max="255" value="128" oninput="updateColorPreview()">
+
+        <div class="color-preview" id="colorPreview"></div>
+      </div>
+
+      <div class="form-buttons">
+        <button type="button" onclick="window.location.reload()">Cancel</button>
+        <button type="submit">Save</button>
+      </div>
+
+      <div class="footer-code">9B964D</div>
+    </div>
+  </form>
+
+  <!-- Right Dropdown Menu -->
+  <div class="right-panel" id="rightMenu">
+    <button class="menu-item"><i>🏠</i> Home</button>
+    <button class="menu-item"><i>⚙️</i> Settings</button>
+    <button class="menu-item"><i>ℹ️</i> Tips</button>
+    <button class="menu-item"><i>💬</i> Feedback</button>
+    <button class="menu-item"><i>❓</i> Help</button>
+    <button class="menu-item"><i>📅</i> Calendar</button>
+  </div>
+
+  <script>
+    function toggleMenu() {
+      const menu = document.getElementById('rightMenu');
+      menu.style.display = menu.style.display === 'flex' ? 'none' : 'flex';
+    }
+
+    function updateColorPreview() {
+      const r = document.querySelector('input[name="red"]').value || 0;
+      const g = document.querySelector('input[name="green"]').value || 0;
+      const b = document.querySelector('input[name="blue"]').value || 0;
+
+      const previewBox = document.getElementById('colorPreview');
+      previewBox.style.backgroundColor = `rgb(${r}, ${g}, ${b})`;
+    }
+  </script>
+
+</body>
+</html>
