@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Category Viewer - PESP</title>
+  <style>
+    /* Same styles as before */
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      height: 100vh;
+      overflow-x: hidden;
+    }
+
+    header {
+      background-color: #a59c66;
+      color: black;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 10px 20px;
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 50px;
+      z-index: 10;
+    }
+
+    .viewer-panel {
+      background-color: #5e854f;
+      margin-top: 60px;
+      padding: 20px;
+    }
+
+    .category-box {
+      background-color: #ddd;
+      padding: 15px 20px;
+      border-radius: 10px;
+      margin: 15px 0;
+    }
+
+    .category-box .description {
+      background-color: white;
+      padding: 10px 15px;
+      margin-top: 8px;
+      border-radius: 5px;
+    }
+
+    .form-buttons {
+      display: flex;
+      justify-content: space-between;
+    }
+
+    .form-buttons button {
+      padding: 8px 16px;
+      border: none;
+      background-color: #4CAF50;
+      color: white;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+
+    .form-buttons button:first-child {
+      background-color: #ccc;
+      color: #000;
+    }
+
+  </style>
+</head>
+<body>
+
+  <header>
+    <div class="left-buttons">
+      <button><strong>PESP</strong></button>
+      <button>Sign in / log in</button>
+      <button>Home</button>
+    </div>
+  </header>
+
+  <div class="viewer-panel">
+    <div class="top-buttons">
+      <button>Return to Schedule Planning</button>
+      <button>Make new Category</button>
+      <button>Remove Existing Category</button>
+    </div>
+
+    <!-- Categories will be dynamically loaded here -->
+    <div id="category-list">
+      <!-- Category boxes will be inserted here -->
+    </div>
+  </div>
+
+  <script>
+    // Fetch categories from backend and display them
+    async function loadCategories() {
+  try {
+    const response = await fetch('/categories');
+    const contentType = response.headers.get('Content-Type');
+
+    // Check if the response is JSON
+    if (!contentType || !contentType.includes('application/json')) {
+      throw new Error('Expected JSON response, but got something else');
+    }
+
+    const categories = await response.json();
+    const categoryList = document.getElementById('category-list');
+
+    // Check if categoryList exists
+    if (!categoryList) {
+      console.error("Category list element not found.");
+      return;
+    }
+
+    categoryList.innerHTML = ''; // Clear any existing content
+
+    categories.forEach(category => {
+      const categoryBox = document.createElement('div');
+      categoryBox.classList.add('category-box');
+
+      // Ensure tasks is defined and is an array before calling .join
+      const taskList = Array.isArray(category.tasks) ? category.tasks.join(', ') : 'No tasks available';
+
+      categoryBox.innerHTML = `
+        <strong>${category.cType}</strong> &nbsp;
+        Color: rgb(${category.red}, ${category.green}, ${category.blue}) &nbsp;&nbsp;
+        Includes: ${taskList} <br>
+        <div class="description">Description: ${category.description || 'No description available'}</div>
+      `;
+      categoryList.appendChild(categoryBox);
+    });
+  } catch (error) {
+    console.error('Error loading categories:', error);
+  }
+}
+
+    document.addEventListener('DOMContentLoaded', (event) => {
+        loadCategories();
+    });
+  </script>
+
+</body>
+</html>
