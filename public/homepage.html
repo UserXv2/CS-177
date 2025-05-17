@@ -144,7 +144,7 @@
         <option>Sort By: Day, Name, etc...</option>
       </select>
       <button>Recurring, One time, etc...</button>
-      <div><strong>Category 1/Date/Name/...</strong></div>
+      <!-- <div><strong>Category 1/Date/Name/...</strong></div>
       <div class="task">Task1</div>
       <div><strong>Category 2/Date/Name/...</strong></div>
       <div class="task">Task2</div>
@@ -154,7 +154,11 @@
       <div class="task dark">Task5</div>
       <div><strong>Category 4/Date/Name/...</strong></div>
       <div class="task">Task6</div>
-      <div class="task">Task7</div>
+      <div class="task">Task7</div> -->
+      <div id="left-category-task-list">
+  <!-- Categories and tasks will be inserted here -->
+</div>
+
       <button>Rank</button>
       <button>Category Management</button>
     </div>
@@ -183,6 +187,48 @@
       const menu = document.getElementById('rightMenu');
       menu.style.display = menu.style.display === 'flex' ? 'none' : 'flex';
     }
+
+
+    async function loadCategoriesAndTasks() {
+  try {
+    const [catRes, taskRes] = await Promise.all([
+      fetch('/categories'),
+      fetch('/tasks')
+    ]);
+
+    const categories = await catRes.json();
+    const tasks = await taskRes.json();
+
+    const leftPanel = document.getElementById('left-category-task-list');
+    leftPanel.innerHTML = ''; // Clear existing content
+
+    console.log(categories)
+
+    categories['Categories'].forEach(cat => {
+      const categoryBlock = document.createElement('div');
+      const header = document.createElement('div');
+      header.innerHTML = `<strong>${cat.cType}</strong>`;
+      categoryBlock.appendChild(header);
+
+      const relatedTasks = tasks['tasks'].filter(task => task['category'] === cat.cType);
+    console.log(relatedTasks)
+
+      relatedTasks.forEach(task => {
+        const taskDiv = document.createElement('div');
+        taskDiv.className = 'task';
+        taskDiv.textContent = task.details || 'Unnamed Task';
+        categoryBlock.appendChild(taskDiv);
+      });
+
+      leftPanel.appendChild(categoryBlock);
+    });
+  } catch (err) {
+    console.error("Error loading category-task list:", err);
+  }
+}
+
+document.addEventListener('DOMContentLoaded', loadCategoriesAndTasks);
+
   </script>
 
 </body>

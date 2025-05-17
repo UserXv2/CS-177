@@ -199,24 +199,52 @@
     <form class="middle-panel" action="/add_task" method="POST">
         <h2>New Task</h2>
       
-        <div class="form-row">
-          <label>Task Name (Category Type):</label>
-          <input type="text" name="cType" required class="input-box" />
+      <div class="form-row">
+          <label>Task Name:</label>
+          <input name="task_name" class="input-box">
         </div>
-      
-        <div class="form-row">
-          <label>Start Date:</label>
-          <input type="date" name="dateS" required class="input-box" />
-          <label>End Date:</label>
-          <input type="date" name="dateE" required class="input-box" />
+
+       <div class="form-row">
+          <label>Category:</label>
+          <select name="category" id="categorySelect" class="input-box">
+            <option value="">Loading...</option>
+          </select>
         </div>
-      
+
         <div class="form-row">
-          <label>Start Time:</label>
-          <input type="time" name="timeS" required class="input-box" />
-          <label>End Time:</label>
-          <input type="time" name="timeE" required class="input-box" />
+        <strong>Color (RGB)</strong>
+
+        <div class="range-label">
+          <label for="red">Red: <span id="redVal">128</span></label>
         </div>
+        <input type="range" name="red" id="red" min="0" max="255" value="128" oninput="updateColorPreview()">
+
+        <div class="range-label">
+          <label for="green">Green: <span id="greenVal">128</span></label>
+        </div>
+        <input type="range" name="green" id="green" min="0" max="255" value="128" oninput="updateColorPreview()">
+
+        <div class="range-label">
+          <label for="blue">Blue: <span id="blueVal">128</span></label>
+        </div>
+        <input type="range" name="blue" id="blue" min="0" max="255" value="128" oninput="updateColorPreview()">
+
+        <div class="color-preview" id="colorPreview"></div>
+      </div>
+            
+      <div class="form-row">
+        <label>Start Date:</label>
+        <input type="date" name="dateS" id="startDate" required class="input-box" />
+        <label>End Date:</label>
+        <input type="date" name="dateE" id="endDate" required class="input-box" />
+      </div>
+
+      <div class="form-row">
+        <label>Start Time:</label>
+        <input type="time" name="timeS" id="startTime" required class="input-box" />
+        <label>End Time:</label>
+        <input type="time" name="timeE" id="endTime" required class="input-box" />
+      </div>
       
         <div class="form-row">
           <label>Progress (0-100):</label>
@@ -229,21 +257,6 @@
             <option value="false" selected>One-time</option>
             <option value="true">Recurring</option>
           </select>
-        </div>
-      
-        <div class="form-row">
-          <label>Category Flexibility:</label>
-          <select name="cFlex" class="input-box">
-            <option value="false">Fixed</option>
-            <option value="true">Flexible</option>
-          </select>
-        </div>
-      
-        <div class="form-row">
-          <label>Category Color (RGB):</label>
-          <input type="number" name="cRed" min="0" max="255" value="100" class="input-box" />
-          <input type="number" name="cGreen" min="0" max="255" value="100" class="input-box" />
-          <input type="number" name="cBlue" min="0" max="255" value="100" class="input-box" />
         </div>
       
         <div class="form-row">
@@ -273,6 +286,59 @@
       const menu = document.getElementById('rightMenu');
       menu.style.display = menu.style.display === 'flex' ? 'none' : 'flex';
     }
+function formatDate(date) {
+    return date.toISOString().split('T')[0]; // Get YYYY-MM-DD format
+  }
+
+  // Function to format time as HH:MM
+  function formatTime(date) {
+    let hours = date.getHours();
+    let minutes = date.getMinutes();
+    return (hours < 10 ? '0' : '') + hours + ':' + (minutes < 10 ? '0' : '') + minutes;
+  }
+
+  // Set the current date and time
+  const now = new Date();
+
+  // Set the current date in the Start Date and End Date fields
+  document.getElementById('startDate').value = formatDate(now);
+  document.getElementById('endDate').value = formatDate(now);
+
+  // Set the current time in the Start Time and End Time fields
+  document.getElementById('startTime').value = formatTime(now);
+  document.getElementById('endTime').value = formatTime(now);
+
+
+
+      fetch('categories.json')
+    .then(response => {
+      if (!response.ok) {
+        throw new Error('Network response was not ok');
+      }
+      return response.json();
+    })
+    .then(data => {
+      const select = document.getElementById('categorySelect');
+      select.innerHTML = '<option value="">-- Select Category --</option>'; // reset options
+
+      // Ensure that we filter and map correctly
+      const seen = new Set();
+      data.Categories.forEach(cat => {
+        // Check if cType exists
+        if (cat.cType && !seen.has(cat.cType)) {
+          seen.add(cat.cType);
+          const option = document.createElement('option');
+          option.value = cat.cType;
+          option.textContent = cat.cType;
+          select.appendChild(option);
+        }
+      });
+    })
+    .catch(err => {
+      console.error('Error loading categories:', err);
+      const select = document.getElementById('categorySelect');
+      select.innerHTML = '<option value="">Error loading categories</option>';
+    });
   </script>
 
 </body>
