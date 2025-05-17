@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Feedback - PESP</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      height: 100vh;
+      overflow-x: hidden;
+    }
+
+    header {
+      background-color: #a59c66;
+      color: black;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 10px 20px;
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 50px;
+      z-index: 10;
+    }
+
+    header .left-buttons {
+      display: flex;
+      gap: 10px;
+      align-items: center;
+    }
+
+    header button {
+      background-color: white;
+      border: none;
+      padding: 10px 15px;
+      cursor: pointer;
+    }
+
+    .menu-toggle {
+      font-size: 24px;
+      background-color: transparent;
+      border: none;
+      cursor: pointer;
+    }
+
+    .feedback-panel {
+      margin-top: 80px;
+      padding: 40px 20px;
+      text-align: center;
+    }
+
+    .feedback-panel h2 {
+      margin-bottom: 10px;
+    }
+
+    .stars {
+      font-size: 24px;
+      color: black;
+      margin-bottom: 20px;
+    }
+
+    textarea {
+      width: 90%;
+      max-width: 600px;
+      height: 150px;
+      background-color: #ddd;
+      border: none;
+      border-radius: 20px;
+      padding: 15px;
+      font-size: 16px;
+    }
+
+    .submit-btn {
+      margin-top: 20px;
+      background-color: #444;
+      color: white;
+      padding: 10px 25px;
+      border: none;
+      border-radius: 20px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+
+    .right-panel {
+      position: fixed;
+      top: 50px;
+      right: 0;
+      width: 200px;
+      background-color: #b18450;
+      padding: 20px;
+      display: none;
+      flex-direction: column;
+      gap: 15px;
+      height: calc(100% - 50px);
+      z-index: 9;
+    }
+
+    .menu-item {
+      background-color: white;
+      border: none;
+      padding: 12px;
+      border-radius: 20px;
+      text-align: left;
+      font-size: 16px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      cursor: pointer;
+      text-decoration: none;
+      color: black;
+    }
+
+    .menu-item i {
+      font-style: normal;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <div class="left-buttons">
+      <button><strong>PESP</strong></button>
+      <a href="homepage.html"><button>Home</button></a>
+      <button disabled>💬 Feedback</button>
+    </div>
+    <button class="menu-toggle" onclick="toggleMenu()">☰</button>
+  </header>
+
+  <div class="feedback-panel">
+    <h2>We'd love your feedback!</h2>
+    <div class="stars">★ ★ ★ ★ ☆</div>
+
+    <textarea placeholder="Your feedback here..."></textarea><br>
+    <button class="submit-btn">Submit Feedback</button>
+  </div>
+
+  <!-- Right Dropdown Menu -->
+  <div class="right-panel" id="rightMenu">
+    <a href="homepage.html" class="menu-item"><i>🏠</i> Home</a>
+    <a href="Settings.html" class="menu-item"><i>⚙️</i> Settings</a>
+    <a href="Tips.html" class="menu-item"><i>ℹ️</i> Tips</a>
+    <a href="Developer-Feedback.html" class="menu-item"><i>💬</i> Feedback</a>
+    <a href="Help.html" class="menu-item"><i>❓</i> Help</a>
+    <a href="Wireframe2.html" class="menu-item"><i>📅</i> Calendar</a>
+    <a href="Category-Viewer.html" class="menu-item"><i>📂</i> Categories</a>
+  </div>
+
+  <script>
+    function toggleMenu() {
+      const menu = document.getElementById('rightMenu');
+      menu.style.display = menu.style.display === 'flex' ? 'none' : 'flex';
+    }
+  </script>
+
+</body>
+</html>

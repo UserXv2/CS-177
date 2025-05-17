@@ -29,6 +29,30 @@ app.get('/tasks', (req, res) => {
   }
 });
 
+app.get('/feedback', (req, res) => {
+  res.sendFile(path.join(__dirname, 'public/Developer-Feedback.html'));
+});
+
+app.get('/help', (req, res) => {
+  res.sendFile(path.join(__dirname, 'public/Help.html'));
+});
+
+app.get('/settings', (req, res) => {
+  res.sendFile(path.join(__dirname, 'public/Settings.html'));
+});
+
+app.get('/tips', (req, res) => {
+  res.sendFile(path.join(__dirname, 'public/Tips.html'));
+});
+
+app.get('/cal', (req, res) => {
+  res.sendFile(path.join(__dirname, 'public/Wireframe2.html'));
+});
+
+app.get('/week', (req, res) => {
+  res.sendFile(path.join(__dirname, 'public/Wireframe1.html'));
+});
+
 app.get('/task/:id', (req, res) => {
   const tasks = taskStorage.loadTasks();
   const taskId = req.params.id;
@@ -96,8 +120,9 @@ app.post('/add_task', (req, res) => {
       progress, isRecurr
     );
 
-    taskStorage.addTask(newTask);
-    res.send(`<h2>Task Created:</h2><pre>${JSON.stringify(newTask, null, 2)}</pre>`);
+    const id = taskStorage.addTask(newTask);
+    // res.send(`<h2>Task Created:</h2><pre>${JSON.stringify(newTask, null, 2)}</pre>`);
+    res.redirect('/task/' +id);
   } catch (err) {
     res.status(500).send("Server Error: " + err.message);
   }
@@ -120,7 +145,8 @@ app.post('/add_category', (req, res) => {
     console.log("categories", newCategory);
     categoryStorage.addCategories(newCategory);
 
-    res.send(`<h2>Category Created:</h2><pre>${JSON.stringify(newCategory, null, 2)}</pre>`);
+    // res.send(`<h2>Category Created:</h2><pre>${JSON.stringify(newCategory, null, 2)}</pre>`);
+    res.redirect('/category_view');
   } catch (err) {
     res.status(500).send("Error saving category: " + err.message);
   }

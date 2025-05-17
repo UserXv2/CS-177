@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Help - PESP</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      height: 100vh;
+      overflow-x: hidden;
+    }
+
+    header {
+      background-color: #a59c66;
+      color: black;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 10px 20px;
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 50px;
+      z-index: 10;
+    }
+
+    header .left-buttons {
+      display: flex;
+      gap: 10px;
+      align-items: center;
+    }
+
+    header button {
+      background-color: white;
+      border: none;
+      padding: 10px 15px;
+      cursor: pointer;
+    }
+
+    .menu-toggle {
+      font-size: 24px;
+      background-color: transparent;
+      border: none;
+      cursor: pointer;
+    }
+
+    .help-panel {
+      margin-top: 70px;
+      padding: 30px;
+    }
+
+    .section-title {
+      font-size: 20px;
+      font-weight: bold;
+      margin-top: 20px;
+    }
+
+    .faq {
+      margin: 15px 0;
+    }
+
+    .faq q {
+      font-weight: bold;
+      display: block;
+      margin-bottom: 5px;
+    }
+
+    .faq p {
+      margin-left: 15px;
+      color: #333;
+    }
+
+    .right-panel {
+      position: fixed;
+      top: 50px;
+      right: 0;
+      width: 200px;
+      background-color: #b18450;
+      padding: 20px;
+      display: none;
+      flex-direction: column;
+      gap: 15px;
+      height: calc(100% - 50px);
+      z-index: 9;
+    }
+
+    .menu-item {
+      background-color: white;
+      border: none;
+      padding: 12px;
+      border-radius: 20px;
+      text-align: left;
+      font-size: 16px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      cursor: pointer;
+      text-decoration: none;
+      color: black;
+    }
+
+    .menu-item i {
+      font-style: normal;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <div class="left-buttons">
+      <button><strong>PESP</strong></button>
+      <a href="homepage.html"><button>Home</button></a>
+      <button>❓ Help</button>
+    </div>
+    <button class="menu-toggle" onclick="toggleMenu()">☰</button>
+  </header>
+
+  <div class="help-panel">
+    <div class="section-title">Need Assistance?</div>
+
+    <div class="faq">
+      <q>How do I create a new task?</q>
+      <p>Go to the sidebar or homepage and click “Create Task”. Fill out the task name, date, and urgency to get started.</p>
+    </div>
+
+    <div class="faq">
+      <q>How can I customize settings?</q>
+      <p>Use the ⚙️ Settings tab in the dropdown menu to update color themes, calendar preferences, and ranking criteria.</p>
+    </div>
+
+    <div class="faq">
+      <q>How do I import my existing schedule?</q>
+      <p>Select "Import Data" from the homepage center panel. You may be asked to upload a file or sync with another calendar tool.</p>
+    </div>
+
+    <div class="faq">
+      <q>How can I contact support?</q>
+      <p>Use the 💬 Feedback form to rate your experience and share comments. Our team will review your message.</p>
+    </div>
+  </div>
+
+  <!-- Right Dropdown Menu -->
+  <div class="right-panel" id="rightMenu">
+    <a href="homepage.html" class="menu-item"><i>🏠</i> Home</a>
+    <a href="Settings.html" class="menu-item"><i>⚙️</i> Settings</a>
+    <a href="Tips.html" class="menu-item"><i>ℹ️</i> Tips</a>
+    <a href="Developer-Feedback.html" class="menu-item"><i>💬</i> Feedback</a>
+    <a href="Help.html" class="menu-item"><i>❓</i> Help</a>
+    <a href="Wireframe2.html" class="menu-item"><i>📅</i> Calendar</a>
+    <a href="Category-Viewer.html" class="menu-item"><i>📂</i> Categories</a>
+  </div>
+
+  <script>
+    function toggleMenu() {
+      const menu = document.getElementById('rightMenu');
+      menu.style.display = menu.style.display === 'flex' ? 'none' : 'flex';
+    }
+  </script>
+
+</body>
+</html>

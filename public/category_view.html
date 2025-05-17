@@ -78,8 +78,8 @@
 
   <div class="viewer-panel">
     <div class="top-buttons">
-      <button>Return to Schedule Planning</button>
-      <button>Make new Category</button>
+      <a href="homepage"><button>Return to Schedule Planning</button></a>
+      <a href="category_creator"><button>Make new Category</button></a>
       <button>Remove Existing Category</button>
     </div>
 
@@ -129,6 +129,7 @@
         Flexibility: ${flexLabel}<br>
         <div class="description">No additional description available.</div>
       `;
+      categoryBox.style.backgroundColor = `rgb(${r}, ${g}, ${b})`;
       categoryList.appendChild(categoryBox);
     });
   } catch (error) {

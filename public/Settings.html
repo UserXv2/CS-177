@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Settings - PESP</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      height: 100vh;
+      overflow-x: hidden;
+    }
+
+    header {
+      background-color: #a59c66;
+      color: black;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 10px 20px;
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 50px;
+      z-index: 10;
+    }
+
+    header .left-buttons {
+      display: flex;
+      gap: 10px;
+      align-items: center;
+    }
+
+    header button {
+      background-color: white;
+      border: none;
+      padding: 10px 15px;
+      cursor: pointer;
+    }
+
+    .menu-toggle {
+      font-size: 24px;
+      background-color: transparent;
+      border: none;
+      cursor: pointer;
+    }
+
+    .settings-panel {
+      margin-top: 60px;
+      padding: 20px;
+    }
+
+    .setting-group {
+      margin: 20px 0;
+    }
+
+    .setting-group strong {
+      margin-right: 10px;
+    }
+
+    .setting-option {
+      background-color: #ddd;
+      border: none;
+      padding: 8px 15px;
+      border-radius: 20px;
+      margin: 5px;
+      cursor: pointer;
+      display: inline-block;
+    }
+
+    .right-panel {
+      position: fixed;
+      top: 50px;
+      right: 0;
+      width: 200px;
+      background-color: #b18450;
+      padding: 20px;
+      display: none;
+      flex-direction: column;
+      gap: 15px;
+      height: calc(100% - 50px);
+      z-index: 9;
+    }
+
+    .menu-item {
+      background-color: white;
+      border: none;
+      padding: 12px;
+      border-radius: 20px;
+      text-align: left;
+      font-size: 16px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      cursor: pointer;
+      text-decoration: none;
+      color: black;
+    }
+
+    .menu-item i {
+      font-style: normal;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <div class="left-buttons">
+      <button><strong>PESP</strong></button>
+      <a href="homepage.html"><button>Home</button></a>
+      <button>⚙️ Settings</button>
+    </div>
+    <button class="menu-toggle" onclick="toggleMenu()">☰</button>
+  </header>
+
+  <div class="settings-panel">
+    <div class="setting-group">
+      <strong>Rank Based on:</strong>
+      <button class="setting-option">Categories</button>
+      <button class="setting-option">User Rank</button>
+      <button class="setting-option">Etc...</button>
+    </div>
+
+    <div class="setting-group">
+      <strong>Display Mode:</strong>
+      <button class="setting-option">Minimalist</button>
+      <button class="setting-option">Detailed</button>
+      <button class="setting-option">Etc...</button>
+    </div>
+
+    <div class="setting-group">
+      <strong>Color settings:</strong>
+      <button class="setting-option">BW: ...</button>
+      <button class="setting-option">BlaGre: ...</button>
+      <button class="setting-option">80 Style: ...</button>
+      <button class="setting-option">Dark: ...</button>
+      <button class="setting-option">Etc...</button>
+    </div>
+
+    <div class="setting-group">
+      <strong>Calendar Settings:</strong>
+      <button class="setting-option">24 Hours</button>
+      <button class="setting-option">12 Hours</button>
+      <button class="setting-option">Etc...</button>
+    </div>
+
+    <div class="setting-group">
+      <strong>Setting 5:</strong>
+    </div>
+    <div class="setting-group">
+      <strong>Setting 6:</strong>
+    </div>
+    <div class="setting-group">
+      <strong>Setting 7:</strong>
+    </div>
+    <div class="setting-group">
+      <strong>Setting 8:</strong>
+    </div>
+  </div>
+
+  <!-- Right Dropdown Menu -->
+  <div class="right-panel" id="rightMenu">
+    <a href="homepage.html" class="menu-item"><i>🏠</i> Home</a>
+    <a href="Settings.html" class="menu-item"><i>⚙️</i> Settings</a>
+    <a href="Tips.html" class="menu-item"><i>ℹ️</i> Tips</a>
+    <a href="Developer-Feedback.html" class="menu-item"><i>💬</i> Feedback</a>
+    <a href="Help.html" class="menu-item"><i>❓</i> Help</a>
+    <a href="Wireframe2.html" class="menu-item"><i>📅</i> Calendar</a>
+    <a href="Category-Viewer.html" class="menu-item"><i>📂</i> Categories</a>
+  </div>
+
+  <script>
+    function toggleMenu() {
+      const menu = document.getElementById('rightMenu');
+      menu.style.display = menu.style.display === 'flex' ? 'none' : 'flex';
+    }
+  </script>
+
+</body>
+</html>

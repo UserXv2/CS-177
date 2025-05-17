@@ -31,6 +31,8 @@ function addTask(task) {
 
   all.tasks.push(task.toJSON());
   saveTasks(all.tasks);
+  console.log(task.id);
+  return task.id;
 }
 
 function getTasksByCategory(categoryName) {

@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Calendar - March 2025</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+    }
+
+    header {
+      background-color: #a59c66;
+      color: black;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 10px 20px;
+      height: 50px;
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 10;
+    }
+
+    header .left-buttons {
+      display: flex;
+      gap: 10px;
+    }
+
+    header button {
+      background-color: white;
+      border: none;
+      padding: 10px 15px;
+      cursor: pointer;
+    }
+
+    .menu-toggle {
+      font-size: 24px;
+      background-color: transparent;
+      border: none;
+      cursor: pointer;
+    }
+
+    .calendar-header {
+      margin-top: 60px;
+      background-color: #4f8b89;
+      color: white;
+      text-align: center;
+      padding: 15px;
+      font-size: 24px;
+      font-weight: bold;
+    }
+
+    .view-toggle {
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      background-color: #4c3e3e;
+      padding: 10px;
+    }
+
+    .view-toggle button {
+      background-color: #ccc;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 10px;
+      cursor: pointer;
+    }
+
+    .month-grid {
+      display: grid;
+      grid-template-columns: repeat(7, 1fr);
+      grid-auto-rows: 120px;
+      border-top: 1px solid #aaa;
+    }
+
+    .day-header {
+      background-color: #5e4747;
+      color: white;
+      text-align: center;
+      padding: 8px;
+      font-weight: bold;
+      border: 1px solid #aaa;
+    }
+
+    .day-cell {
+      background-color: #fdfdfd;
+      border: 1px solid #aaa;
+      padding: 5px;
+      font-size: 12px;
+      position: relative;
+    }
+
+    .day-number {
+      font-weight: bold;
+      position: absolute;
+      top: 5px;
+      right: 10px;
+      font-size: 14px;
+    }
+
+    .task {
+      background-color: #ccc;
+      margin-top: 25px;
+      padding: 3px 5px;
+      border-radius: 5px;
+      font-size: 13px;
+      width: fit-content;
+    }
+
+    .holiday {
+      color: red;
+      font-size: 13px;
+      margin-top: 5px;
+    }
+
+    .right-panel {
+      position: fixed;
+      top: 50px;
+      right: 0;
+      width: 200px;
+      background-color: #b18450;
+      padding: 20px;
+      display: none;
+      flex-direction: column;
+      gap: 15px;
+      height: calc(100% - 50px);
+      z-index: 9;
+    }
+
+    .menu-item {
+      background-color: white;
+      border: none;
+      padding: 12px;
+      border-radius: 20px;
+      text-align: left;
+      font-size: 16px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      cursor: pointer;
+      text-decoration: none;
+      color: black;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <div class="left-buttons">
+      <button><strong>PESP</strong></button>
+      <a href="homepage.html"><button>Home</button></a>
+      <button>📅 Calendar</button>
+    </div>
+    <button class="menu-toggle" onclick="toggleMenu()">☰</button>
+  </header>
+
+  <div class="calendar-header">MARCH 2025</div>
+
+  <div class="view-toggle">
+    <button>Week</button>
+    <button>Month</button>
+    <button>Year</button>
+  </div>
+
+  <div class="month-grid">
+    <!-- Weekday Headers -->
+    <div class="day-header">Sunday</div>
+    <div class="day-header">Monday</div>
+    <div class="day-header">Tuesday</div>
+    <div class="day-header">Wednesday</div>
+    <div class="day-header">Thursday</div>
+    <div class="day-header">Friday</div>
+    <div class="day-header">Saturday</div>
+
+    <!-- Week 1 -->
+    <div class="day-cell"></div>
+    <div class="day-cell"></div>
+    <div class="day-cell"></div>
+    <div class="day-cell"></div>
+    <div class="day-cell"></div>
+    <div class="day-cell"><span class="day-number">1</span></div>
+    <div class="day-cell"><span class="day-number">2</span></div>
+
+    <!-- Week 2 -->
+    <div class="day-cell"><span class="day-number">3</span></div>
+    <div class="day-cell"><span class="day-number">4</span></div>
+    <div class="day-cell"><span class="day-number">5</span></div>
+    <div class="day-cell"><span class="day-number">6</span><div class="holiday">holiday</div><div class="task">Task 1</div></div>
+    <div class="day-cell"><span class="day-number">7</span></div>
+    <div class="day-cell"><span class="day-number">8</span><div class="task">Task 2</div></div>
+    <div class="day-cell"><span class="day-number">9</span><div class="task">Task 3</div></div>
+
+    <!-- Week 3 -->
+    <div class="day-cell"><span class="day-number">10</span></div>
+    <div class="day-cell"><span class="day-number">11</span></div>
+    <div class="day-cell"><span class="day-number">12</span></div>
+    <div class="day-cell"><span class="day-number">13</span></div>
+    <div class="day-cell"><span class="day-number">14</span><div class="holiday">holiday</div></div>
+    <div class="day-cell"><span class="day-number">15</span></div>
+    <div class="day-cell"><span class="day-number">16</span></div>
+
+    <!-- Week 4 -->
+    <div class="day-cell"><span class="day-number">17</span></div>
+    <div class="day-cell"><span class="day-number">18</span></div>
+    <div class="day-cell"><span class="day-number">19</span></div>
+    <div class="day-cell"><span class="day-number">20</span></div>
+    <div class="day-cell"><span class="day-number">21</span></div>
+    <div class="day-cell"><span class="day-number">22</span></div>
+    <div class="day-cell"><span class="day-number">23</span></div>
+
+    <!-- Week 5 -->
+    <div class="day-cell"><span class="day-number">24</span></div>
+    <div class="day-cell"><span class="day-number">25</span></div>
+    <div class="day-cell"><span class="day-number">26</span></div>
+    <div class="day-cell"><span class="day-number">27</span></div>
+    <div class="day-cell"><span class="day-number">28</span></div>
+    <div class="day-cell"><span class="day-number">29</span></div>
+    <div class="day-cell"><span class="day-number">30</span></div>
+
+    <!-- Week 6 -->
+    <div class="day-cell"><span class="day-number">31</span></div>
+    <div class="day-cell"></div>
+    <div class="day-cell"></div>
+    <div class="day-cell"></div>
+    <div class="day-cell"></div>
+    <div class="day-cell"></div>
+    <div class="day-cell"></div>
+  </div>
+
+  <!-- Right Dropdown Menu -->
+  <div class="right-panel" id="rightMenu">
+    <a href="homepage.html" class="menu-item"><i>🏠</i> Home</a>
+    <a href="Settings.html" class="menu-item"><i>⚙️</i> Settings</a>
+    <a href="Tips.html" class="menu-item"><i>ℹ️</i> Tips</a>
+    <a href="Developer-Feedback.html" class="menu-item"><i>💬</i> Feedback</a>
+    <a href="Help.html" class="menu-item"><i>❓</i> Help</a>
+    <a href="Wireframe2.html" class="menu-item"><i>📅</i> Calendar</a>
+    <a href="Category-Viewer.html" class="menu-item"><i>📂</i> Categories</a>
+  </div>
+
+  <script>
+    function toggleMenu() {
+      const menu = document.getElementById('rightMenu');
+      menu.style.display = menu.style.display === 'flex' ? 'none' : 'flex';
+    }
+  </script>
+
+</body>
+</html>

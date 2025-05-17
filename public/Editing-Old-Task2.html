@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Edit Task Details - PESP</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      height: 100vh;
+      overflow: hidden;
+    }
+
+    header {
+      background-color: #a59c66;
+      color: black;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 10px 20px;
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 50px;
+      z-index: 10;
+    }
+
+    header .left-buttons {
+      display: flex;
+      gap: 10px;
+    }
+
+    header button {
+      background-color: white;
+      border: none;
+      padding: 10px 15px;
+      cursor: pointer;
+    }
+
+    .menu-toggle {
+      font-size: 24px;
+      background-color: transparent;
+      border: none;
+      cursor: pointer;
+    }
+
+    .container {
+      display: flex;
+      width: 100%;
+      margin-top: 50px;
+      height: calc(100% - 50px);
+    }
+
+    .left-panel {
+      background-color: #5e854f;
+      width: 20%;
+      padding: 10px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .left-panel select,
+    .left-panel button {
+      padding: 5px;
+    }
+
+    .task {
+      background-color: #ccc;
+      padding: 8px;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    .task.dark {
+      background-color: #333;
+      color: white;
+    }
+
+    .middle-panel {
+      background-color: #fff;
+      width: 80%;
+      padding: 30px;
+    }
+
+    .form-row {
+      margin: 15px 0;
+    }
+
+    .input-box,
+    .recurring-btn,
+    .urgency-box {
+      background-color: #ddd;
+      border-radius: 25px;
+      padding: 10px 20px;
+      display: inline-block;
+      margin: 5px;
+    }
+
+    .recurring-options {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .subtask-section {
+      background-color: #999;
+      padding: 20px;
+      border-radius: 15px;
+    }
+
+    .subtask-section button {
+      background-color: #ccc;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 20px;
+      margin: 5px;
+      cursor: pointer;
+    }
+
+    .subtask {
+      background-color: #ccc;
+      margin: 5px 0;
+      padding: 10px;
+      border-radius: 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .form-buttons {
+      display: flex;
+      justify-content: flex-end;
+      gap: 20px;
+      margin-top: 30px;
+    }
+
+    .form-buttons button {
+      padding: 10px 20px;
+      font-size: 16px;
+      border: none;
+      background-color: #eee;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    select {
+      padding: 8px 12px;
+      border-radius: 5px;
+    }
+
+    .right-panel {
+      position: fixed;
+      top: 50px;
+      right: 0;
+      width: 200px;
+      background-color: #b18450;
+      padding: 20px;
+      display: none;
+      flex-direction: column;
+      gap: 15px;
+      height: calc(100% - 50px);
+      z-index: 9;
+    }
+
+    .menu-item {
+      background-color: white;
+      border: none;
+      padding: 12px;
+      border-radius: 20px;
+      text-align: left;
+      font-size: 16px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      cursor: pointer;
+      text-decoration: none;
+      color: black;
+    }
+
+    .menu-item i {
+      font-style: normal;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <div class="left-buttons">
+      <button><strong>PESP</strong></button>
+      <a href="homepage.html"><button>Home</button></a>
+    </div>
+    <button class="menu-toggle" onclick="toggleMenu()">☰</button>
+  </header>
+
+  <div class="container">
+    <!-- Left Panel -->
+    <div class="left-panel">
+      <select>
+        <option>Day, Name, etc...</option>
+      </select>
+      <button>Recurring, One time, etc...</button>
+
+      <div><strong>Category 1/Date/Name/...</strong></div>
+      <div class="task">Task1</div>
+
+      <div><strong>Category 2/Date/Name/...</strong></div>
+      <div class="task">Task2</div>
+      <div class="task">Task3</div>
+
+      <div><strong>Category 3/Date/Name/...</strong></div>
+      <div class="task dark">Task4</div>
+      <div class="task dark">Task5</div>
+
+      <div><strong>Category 4/Date/Name/...</strong></div>
+      <div class="task">Task6</div>
+      <div class="task">Task7</div>
+
+      <button>Rank</button>
+      <a href="Category-Creator.html"><button>Category Management</button></a>
+    </div>
+
+    <!-- Middle Panel -->
+    <div class="middle-panel">
+      <div class="form-row">
+        <strong>Editing:</strong>
+        <div class="input-box">Task 1</div>
+      </div>
+
+      <div class="form-row">
+        <strong style="color: green;">Recurring:</strong>
+        <div class="recurring-options">
+          <div class="recurring-btn">Daily</div>
+          <div class="recurring-btn">Weekly</div>
+          <div class="recurring-btn">Monthly</div>
+          <div class="recurring-btn">Yearly</div>
+          <div class="recurring-btn">N/A</div>
+        </div>
+      </div>
+
+      <div class="form-row">
+        <strong>Urgency 1–10:</strong>
+        <div class="urgency-box">5</div>
+      </div>
+
+      <div class="form-row">
+        <strong>Sub-Tasks to Complete (Optional)</strong>
+        <div class="subtask-section">
+          <button>Add Sub-Task</button>
+          <button>Remove Sub-Task</button>
+          <div class="subtask">
+            <div>Sub-Task 1</div>
+            <input type="checkbox" />
+          </div>
+          <div class="subtask">
+            <div>Sub-Task 2</div>
+            <input type="checkbox" />
+          </div>
+        </div>
+      </div>
+
+      <div class="form-row">
+        <strong>Due:</strong>
+        <select>
+          <option>N/A</option>
+          <option>Today</option>
+          <option>Tomorrow</option>
+          <option>This Week</option>
+        </select>
+      </div>
+
+      <div class="form-buttons">
+        <button>Cancel</button>
+        <button>Save</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Right Dropdown Menu -->
+  <div class="right-panel" id="rightMenu">
+    <a href="homepage.html" class="menu-item"><i>🏠</i> Home</a>
+    <a href="Settings.html" class="menu-item"><i>⚙️</i> Settings</a>
+    <a href="Tips.html" class="menu-item"><i>ℹ️</i> Tips</a>
+    <a href="Developer-Feedback.html" class="menu-item"><i>💬</i> Feedback</a>
+    <a href="Help.html" class="menu-item"><i>❓</i> Help</a>
+    <a href="Wireframe2.html" class="menu-item"><i>📅</i> Calendar</a>
+    <a href="Category-Viewer.html" class="menu-item"><i>📂</i> Categories</a>
+  </div>
+
+  <script>
+    function toggleMenu() {
+      const menu = document.getElementById('rightMenu');
+      menu.style.display = menu.style.display === 'flex' ? 'none' : 'flex';
+    }
+  </script>
+
+</body>
+</html>

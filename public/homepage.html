@@ -38,6 +38,8 @@
       cursor: pointer;
     }
 
+    
+
     .container {
       display: flex;
       width: 100%;
@@ -144,6 +146,7 @@
         <option>Sort By: Day, Name, etc...</option>
       </select>
       <button>Recurring, One time, etc...</button>
+      <button class="new_task"><a href="new_task">New Task</a></button>
       <!-- <div><strong>Category 1/Date/Name/...</strong></div>
       <div class="task">Task1</div>
       <div><strong>Category 2/Date/Name/...</strong></div>
@@ -160,7 +163,7 @@
 </div>
 
       <button>Rank</button>
-      <button>Category Management</button>
+      <a href="category_view"><button>Category Management</button></a>
     </div>
 
     <!-- Middle Panel -->
@@ -190,7 +193,7 @@
 
 
     async function loadCategoriesAndTasks() {
-  try {
+  // try {
     const [catRes, taskRes] = await Promise.all([
       fetch('/categories'),
       fetch('/tasks')
@@ -206,10 +209,21 @@
 
     categories['Categories'].forEach(cat => {
       const categoryBlock = document.createElement('div');
+      categoryBlock.className = "categoryBlock";
       const header = document.createElement('div');
+      header.className = "categoryHeader";
+      let r = 0, g = 0, b = 0;
+      if (Array.isArray(cat.color) && cat.color.length === 3) {
+        [r, g, b] = cat.color;
+      } else if ('red' in cat && 'green' in cat && 'blue' in cat) {
+        r = cat.red;
+        g = cat.green;
+        b = cat.blue;
+      }
+      header.style.backgroundColor = `rgb(${r}, ${g}, ${b})`;
       header.innerHTML = `<strong>${cat.cType}</strong>`;
       categoryBlock.appendChild(header);
-
+      if (tasks['tasks']) {
       const relatedTasks = tasks['tasks'].filter(task => task['category'] === cat.cType);
     console.log(relatedTasks)
 
@@ -219,12 +233,18 @@
         taskDiv.textContent = task.details || 'Unnamed Task';
         categoryBlock.appendChild(taskDiv);
       });
-
+    } else {
+      const taskDiv = document.createElement('div');
+        taskDiv.className = 'task';
+       taskDiv.textContent = 'No Task';
+      categoryBlock.appendChild(taskDiv);
+    }
       leftPanel.appendChild(categoryBlock);
+    
     });
-  } catch (err) {
-    console.error("Error loading category-task list:", err);
-  }
+  // } catch (err) {
+  //   console.error("Error loading category-task list:", err);
+  // }
 }
 
 document.addEventListener('DOMContentLoaded', loadCategoriesAndTasks);
