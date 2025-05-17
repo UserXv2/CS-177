@@ -18,10 +18,12 @@ const Category = require('./category');
 const Date = require('./date'); // if you have one
 const ClockTime = require('./clockTime');
 const ExtraConsideration = require('./extraConsideration');
-
+const { v4: uuidv4 } = require('uuid'); 
 
 class Tasks {
-	constructor(type, red = 0, green = 0, blue = 0, flexibility, details = "No Extra Details", startDate = new Date(), endDate = new Date(), startTime = new ClockTime, endTime = new ClockTime, progress = 0, recurrs = false) {
+	constructor(name, type, red = 0, green = 0, blue = 0, flexibility, details = "No Extra Details", startDate = new Date(), endDate = new Date(), startTime = new ClockTime, endTime = new ClockTime, progress = 0, recurrs = false, id = uuidv4()) {
+		this.id = id;
+		this.name = name;
 		this.recurring = recurrs;
 		this.categories = new Category(type, red, green, blue, flexibility);
 		(type, red, blue, green, flexibility);
@@ -172,9 +174,29 @@ class Tasks {
 	getDetails() {
 		return this.details;
 	}
+
+	toJSON() {
+		return {
+			id: this.id,
+		  name: this.name,
+		  recurring: this.recurring,
+		  category: this.getCategory().getTypeName(),  // assuming .type exists
+		  color: this.color,
+		  progress: this.progress,
+		  details: this.details,
+		  startDate: this.startDate.toString(), // or toJSON() if defined
+		  deadline: this.deadline.toString(),
+		  startTime: this.startTime.toString(),
+		  endTime: this.endTime.toString(),
+		  notes: this.notes,
+		  extraConsider: this.extraConsider,
+		  timeToComplete: this.timeToComplete
+		};
+	  }
 }
 
 module.exports = Tasks;
+
 /*
 Include
 	Variables (from constructors)

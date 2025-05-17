@@ -59,6 +59,14 @@ class category {
 		console.log(this.categoryType + "\n" + this.color + "\n" + this.defualtFlex)
 	}
 	*/
+
+	toJSON() {
+		return {
+		  cType: this.categoryType,
+		  color: this.color,
+		  flex: this.defualtFlex
+		};
+	  }
 }
 //creates a library for storing each category, by defualt, it will have the defualt category
 var categoryLibrary = [ new category() ];
