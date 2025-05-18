@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8" />
   <title>New Task - PESP</title>
@@ -52,9 +53,11 @@
       display: flex;
       flex-direction: column;
       gap: 10px;
+      padding-top: 50px;
     }
 
-    .left-panel select, .left-panel button {
+    .left-panel select,
+    .left-panel button {
       padding: 5px;
     }
 
@@ -151,11 +154,14 @@
       align-items: center;
       gap: 10px;
       cursor: pointer;
+      text-decoration: none;
+      color: black;
     }
 
     .menu-item i {
       font-style: normal;
     }
+
     .color-preview {
       width: 100%;
       height: 40px;
@@ -163,19 +169,30 @@
       margin-top: 10px;
       border: 1px solid #ccc;
     }
+
+    .content {
+      display: flex;
+      justify-content: center;
+      width: 100%;
+
+      overflow: hidden;
+      overflow-y: scroll;
+      padding-bottom: 100px;
+    }
   </style>
 </head>
+
 <body>
 
   <header>
     <div class="left-buttons">
-      <button><strong>PESP</strong></button>
-      <button>Home</button>
+      <a href="homepage"><button><strong>PESP</strong></button></a>
+      <a href="homepage"><button>Home</button></a>
     </div>
     <button class="menu-toggle" onclick="toggleMenu()">☰</button>
   </header>
 
-<div class="container">
+  <div class="container">
     <!-- Left Panel -->
     <div class="left-panel">
       <select>
@@ -194,19 +211,19 @@
       <div class="task">Task6</div>
       <div class="task">Task7</div> -->
       <div id="left-category-task-list"></div>
-  <!-- Categories and tasks will be inserted here -->
-</div>
-
-    <!-- Middle Panel -->
-    <form class="middle-panel" action="/add_task" method="POST">
+      <!-- Categories and tasks will be inserted here -->
+    </div>
+    <div class="content">
+      <!-- Middle Panel -->
+      <form class="middle-panel" action="/add_task" method="POST">
         <h2>New Task</h2>
-      
-      <div class="form-row">
+
+        <div class="form-row">
           <label>Task Name:</label>
           <input name="task_name" class="input-box">
         </div>
 
-       <div class="form-row">
+        <div class="form-row">
           <label>Category:</label>
           <select name="category" id="categorySelect" class="input-box">
             <option value="">Loading...</option>
@@ -214,45 +231,45 @@
         </div>
 
         <div class="form-row">
-        <strong>Color (RGB)</strong>
+          <strong>Color (RGB)</strong>
 
-        <div class="range-label">
-          <label for="red">Red: <span id="redVal">128</span></label>
+          <div class="range-label">
+            <label for="red">Red: <span id="redVal">128</span></label>
+          </div>
+          <input type="range" name="red" id="red" min="0" max="255" value="128" oninput="updateColorPreview()">
+
+          <div class="range-label">
+            <label for="green">Green: <span id="greenVal">128</span></label>
+          </div>
+          <input type="range" name="green" id="green" min="0" max="255" value="128" oninput="updateColorPreview()">
+
+          <div class="range-label">
+            <label for="blue">Blue: <span id="blueVal">128</span></label>
+          </div>
+          <input type="range" name="blue" id="blue" min="0" max="255" value="128" oninput="updateColorPreview()">
+
+          <div class="color-preview" id="colorPreview"></div>
         </div>
-        <input type="range" name="red" id="red" min="0" max="255" value="128" oninput="updateColorPreview()">
 
-        <div class="range-label">
-          <label for="green">Green: <span id="greenVal">128</span></label>
+        <div class="form-row">
+          <label>Start Date:</label>
+          <input type="date" name="dateS" id="startDate" required class="input-box" />
+          <label>End Date:</label>
+          <input type="date" name="dateE" id="endDate" required class="input-box" />
         </div>
-        <input type="range" name="green" id="green" min="0" max="255" value="128" oninput="updateColorPreview()">
 
-        <div class="range-label">
-          <label for="blue">Blue: <span id="blueVal">128</span></label>
+        <div class="form-row">
+          <label>Start Time:</label>
+          <input type="time" name="timeS" id="startTime" required class="input-box" />
+          <label>End Time:</label>
+          <input type="time" name="timeE" id="endTime" required class="input-box" />
         </div>
-        <input type="range" name="blue" id="blue" min="0" max="255" value="128" oninput="updateColorPreview()">
 
-        <div class="color-preview" id="colorPreview"></div>
-      </div>
-            
-      <div class="form-row">
-        <label>Start Date:</label>
-        <input type="date" name="dateS" id="startDate" required class="input-box" />
-        <label>End Date:</label>
-        <input type="date" name="dateE" id="endDate" required class="input-box" />
-      </div>
-
-      <div class="form-row">
-        <label>Start Time:</label>
-        <input type="time" name="timeS" id="startTime" required class="input-box" />
-        <label>End Time:</label>
-        <input type="time" name="timeE" id="endTime" required class="input-box" />
-      </div>
-      
         <div class="form-row">
           <label>Progress (0-100):</label>
           <input type="number" name="progress" min="0" max="100" value="0" class="input-box" />
         </div>
-      
+
         <div class="form-row">
           <label>Recurring:</label>
           <select name="taskRecurr" class="input-box">
@@ -260,162 +277,168 @@
             <option value="true">Recurring</option>
           </select>
         </div>
-      
+
         <div class="form-row">
           <label>Task Details:</label>
           <textarea name="details" placeholder="Description"></textarea>
         </div>
-      
+
         <div class="form-buttons">
           <button type="reset">Cancel</button>
           <button type="submit">Create Task</button>
         </div>
       </form>
-      
+    </div>
 
-  <!-- Right Dropdown Menu -->
-  <div class="right-panel" id="rightMenu">
-    <button class="menu-item"><i>🏠</i> Home</button>
-    <button class="menu-item"><i>⚙️</i> Settings</button>
-    <button class="menu-item"><i>ℹ️</i> Tips</button>
-    <button class="menu-item"><i>💬</i> Feedback</button>
-    <button class="menu-item"><i>❓</i> Help</button>
-    <button class="menu-item"><i>📅</i> Calendar</button>
-  </div>
 
-  <script>
-    function toggleMenu() {
-      const menu = document.getElementById('rightMenu');
-      menu.style.display = menu.style.display === 'flex' ? 'none' : 'flex';
-    }
-function formatDate(date) {
-    return date.toISOString().split('T')[0]; // Get YYYY-MM-DD format
-  }
+    <!-- Right Dropdown Menu -->
+    <div class="right-panel" id="rightMenu">
+      <a href="homepage" class="menu-item"><i>🏠</i> Home</a>
+      <a href="Settings" class="menu-item"><i>⚙️</i> Settings</a>
+      <a href="Tips" class="menu-item"><i>ℹ️</i> Tips</a>
+      <a href="Developer-Feedback" class="menu-item"><i>💬</i> Feedback</a>
+      <a href="Help" class="menu-item"><i>❓</i> Help</a>
+      <a href="Wireframe2" class="menu-item"><i>📅</i> Calendar</a>
+      <a href="Category-Viewer" class="menu-item"><i>📂</i> Categories</a>
+    </div>
 
-  // Function to format time as HH:MM
-  function formatTime(date) {
-    let hours = date.getHours();
-    let minutes = date.getMinutes();
-    return (hours < 10 ? '0' : '') + hours + ':' + (minutes < 10 ? '0' : '') + minutes;
-  }
+    <script>
+      function toggleMenu() {
+        const menu = document.getElementById('rightMenu');
+        menu.style.display = menu.style.display === 'flex' ? 'none' : 'flex';
+      }
+      function formatDate(date) {
+        return date.toISOString().split('T')[0]; // Get YYYY-MM-DD format
+      }
 
-  // Set the current date and time
-  const now = new Date();
+      // Function to format time as HH:MM
+      function formatTime(date) {
+        let hours = date.getHours();
+        let minutes = date.getMinutes();
+        return (hours < 10 ? '0' : '') + hours + ':' + (minutes < 10 ? '0' : '') + minutes;
+      }
 
-  // Set the current date in the Start Date and End Date fields
-  document.getElementById('startDate').value = formatDate(now);
-  document.getElementById('endDate').value = formatDate(now);
+      // Set the current date and time
+      const now = new Date();
 
-  // Set the current time in the Start Time and End Time fields
-  document.getElementById('startTime').value = formatTime(now);
-  document.getElementById('endTime').value = formatTime(now);
+      // Set the current date in the Start Date and End Date fields
+      document.getElementById('startDate').value = formatDate(now);
+      document.getElementById('endDate').value = formatDate(now);
+
+      // Set the current time in the Start Time and End Time fields
+      document.getElementById('startTime').value = formatTime(now);
+      document.getElementById('endTime').value = formatTime(now);
 
 
 
       fetch('categories.json')
-    .then(response => {
-      if (!response.ok) {
-        throw new Error('Network response was not ok');
+        .then(response => {
+          if (!response.ok) {
+            throw new Error('Network response was not ok');
+          }
+          return response.json();
+        })
+        .then(data => {
+          const select = document.getElementById('categorySelect');
+          select.innerHTML = '<option value="">-- Select Category --</option>'; // reset options
+
+          // Ensure that we filter and map correctly
+          const seen = new Set();
+          data.Categories.forEach(cat => {
+            // Check if cType exists
+            if (cat.cType && !seen.has(cat.cType)) {
+              seen.add(cat.cType);
+              const option = document.createElement('option');
+              option.value = cat.cType;
+              option.textContent = cat.cType;
+              select.appendChild(option);
+            }
+          });
+        })
+        .catch(err => {
+          console.error('Error loading categories:', err);
+          const select = document.getElementById('categorySelect');
+          select.innerHTML = '<option value="">Error loading categories</option>';
+        });
+
+
+      async function loadCategoriesAndTasks() {
+        // try {
+        const [catRes, taskRes] = await Promise.all([
+          fetch('/categories'),
+          fetch('/tasks')
+        ]);
+
+        const categories = await catRes.json();
+        const tasks = await taskRes.json();
+
+        const leftPanel = document.getElementById('left-category-task-list');
+        leftPanel.innerHTML = ''; // Clear existing content
+
+        console.log(categories)
+
+        categories['Categories'].forEach(cat => {
+          const categoryBlock = document.createElement('div');
+          categoryBlock.className = "categoryBlock";
+          const header = document.createElement('div');
+          header.className = "categoryHeader";
+          let r = 0, g = 0, b = 0;
+          if (Array.isArray(cat.color) && cat.color.length === 3) {
+            [r, g, b] = cat.color;
+          } else if ('red' in cat && 'green' in cat && 'blue' in cat) {
+            r = cat.red;
+            g = cat.green;
+            b = cat.blue;
+          }
+          header.style.backgroundColor = `rgb(${r}, ${g}, ${b})`;
+          header.innerHTML = `<strong>${cat.cType}</strong>`;
+          categoryBlock.appendChild(header);
+          if (tasks['tasks']) {
+            const relatedTasks = tasks['tasks'].filter(task => task['category'] === cat.cType);
+            console.log(relatedTasks)
+
+            relatedTasks.forEach(task => {
+              const taskDiv = document.createElement('div');
+              const taskLink = document.createElement('a');
+              taskLink.href = "/task/" + task['id'];
+              taskDiv.className = 'task';
+              taskLink.textContent = task.name || 'Unnamed Task';
+              categoryBlock.appendChild(taskDiv);
+              taskDiv.appendChild(taskLink);
+            });
+          } else {
+            const taskDiv = document.createElement('div');
+            taskDiv.className = 'task';
+            taskDiv.textContent = 'No Task';
+            categoryBlock.appendChild(taskDiv);
+          }
+          leftPanel.appendChild(categoryBlock);
+
+        });
+        // } catch (err) {
+        //   console.error("Error loading category-task list:", err);
+        // }
       }
-      return response.json();
-    })
-    .then(data => {
-      const select = document.getElementById('categorySelect');
-      select.innerHTML = '<option value="">-- Select Category --</option>'; // reset options
 
-      // Ensure that we filter and map correctly
-      const seen = new Set();
-      data.Categories.forEach(cat => {
-        // Check if cType exists
-        if (cat.cType && !seen.has(cat.cType)) {
-          seen.add(cat.cType);
-          const option = document.createElement('option');
-          option.value = cat.cType;
-          option.textContent = cat.cType;
-          select.appendChild(option);
-        }
-      });
-    })
-    .catch(err => {
-      console.error('Error loading categories:', err);
-      const select = document.getElementById('categorySelect');
-      select.innerHTML = '<option value="">Error loading categories</option>';
-    });
+      function updateColorPreview() {
+        const r = document.querySelector('input[name="red"]').value || 0;
+        const g = document.querySelector('input[name="green"]').value || 0;
+        const b = document.querySelector('input[name="blue"]').value || 0;
 
+        const redVal = document.querySelector('#redVal');
+        redVal.innerHTML = document.querySelector('input[name="red"]').value;
+        const greenVal = document.querySelector('#greenVal');
+        greenVal.innerHTML = document.querySelector('input[name="green"]').value;
+        const blueVal = document.querySelector('#blueVal');
+        blueVal.innerHTML = document.querySelector('input[name="blue"]').value;
 
-    async function loadCategoriesAndTasks() {
-  // try {
-    const [catRes, taskRes] = await Promise.all([
-      fetch('/categories'),
-      fetch('/tasks')
-    ]);
-
-    const categories = await catRes.json();
-    const tasks = await taskRes.json();
-
-    const leftPanel = document.getElementById('left-category-task-list');
-    leftPanel.innerHTML = ''; // Clear existing content
-
-    console.log(categories)
-
-    categories['Categories'].forEach(cat => {
-      const categoryBlock = document.createElement('div');
-      categoryBlock.className = "categoryBlock";
-      const header = document.createElement('div');
-      header.className = "categoryHeader";
-      let r = 0, g = 0, b = 0;
-      if (Array.isArray(cat.color) && cat.color.length === 3) {
-        [r, g, b] = cat.color;
-      } else if ('red' in cat && 'green' in cat && 'blue' in cat) {
-        r = cat.red;
-        g = cat.green;
-        b = cat.blue;
+        const previewBox = document.getElementById('colorPreview');
+        previewBox.style.backgroundColor = `rgb(${r}, ${g}, ${b})`;
       }
-      header.style.backgroundColor = `rgb(${r}, ${g}, ${b})`;
-      header.innerHTML = `<strong>${cat.cType}</strong>`;
-      categoryBlock.appendChild(header);
-      if (tasks['tasks']) {
-      const relatedTasks = tasks['tasks'].filter(task => task['category'] === cat.cType);
-    console.log(relatedTasks)
 
-      relatedTasks.forEach(task => {
-        const taskDiv = document.createElement('div');
-        taskDiv.className = 'task';
-        taskDiv.textContent = task.details || 'Unnamed Task';
-        categoryBlock.appendChild(taskDiv);
-      });
-    } else {
-      const taskDiv = document.createElement('div');
-        taskDiv.className = 'task';
-       taskDiv.textContent = 'No Task';
-      categoryBlock.appendChild(taskDiv);
-    }
-      leftPanel.appendChild(categoryBlock);
-    
-    });
-  // } catch (err) {
-  //   console.error("Error loading category-task list:", err);
-  // }
-}
-
-    function updateColorPreview() {
-      const r = document.querySelector('input[name="red"]').value || 0;
-      const g = document.querySelector('input[name="green"]').value || 0;
-      const b = document.querySelector('input[name="blue"]').value || 0;
-
-      const redVal = document.querySelector('#redVal');
-      redVal.innerHTML = document.querySelector('input[name="red"]').value;
-      const greenVal = document.querySelector('#greenVal');
-      redVal.innerHTML = document.querySelector('input[name="green"]').value;
-      const blueVal = document.querySelector('#blueVal');
-      redVal.innerHTML = document.querySelector('input[name="blue"]').value;
-      
-      const previewBox = document.getElementById('colorPreview');
-      previewBox.style.backgroundColor = `rgb(${r}, ${g}, ${b})`;
-    }
-
-    document.addEventListener('DOMContentLoaded', loadCategoriesAndTasks);
-  </script>
+      document.addEventListener('DOMContentLoaded', loadCategoriesAndTasks);
+    </script>
 
 </body>
+
 </html>

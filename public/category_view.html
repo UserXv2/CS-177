@@ -1,15 +1,39 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8" />
   <title>Category Viewer - PESP</title>
   <style>
+    /* body { */
+    /*   margin: 0; */
+    /*   font-family: Arial, sans-serif; */
+    /*   height: 100vh; */
+    /*   overflow-x: hidden; */
+    /* } */
+    /**/
+    /* header { */
+    /*   background-color: #a59c66; */
+    /*   color: black; */
+    /*   display: flex; */
+    /*   justify-content: space-between; */
+    /*   align-items: center; */
+    /*   padding: 10px 20px; */
+    /*   position: fixed; */
+    /*   top: 0; */
+    /*   left: 0; */
+    /*   right: 0; */
+    /*   height: 50px; */
+    /*   z-index: 10; */
+    /* } */
+
     body {
       margin: 0;
       font-family: Arial, sans-serif;
       height: 100vh;
-      overflow-x: hidden;
+      overflow: hidden;
     }
+
 
     header {
       background-color: #a59c66;
@@ -24,6 +48,39 @@
       right: 0;
       height: 50px;
       z-index: 10;
+
+    }
+
+    header .left-buttons {
+      display: flex;
+      gap: 10px;
+    }
+
+    header button {
+      background-color: white;
+      border: none;
+      padding: 10px 15px;
+      cursor: pointer;
+    }
+
+    .viewer-panel .top-buttons {
+      display: flex;
+      gap: 10px;
+    }
+
+    .viewer-panel button {
+      background-color: white;
+      border: none;
+      padding: 10px 15px;
+      cursor: pointer;
+    }
+
+
+    .container {
+      display: flex;
+      width: 100%;
+      margin-top: 50px;
+      height: calc(100% - 50px);
     }
 
     .viewer-panel {
@@ -66,6 +123,7 @@
     }
   </style>
 </head>
+
 <body>
 
   <header>
@@ -89,56 +147,57 @@
 
   <script>
     async function loadCategories() {
-  try {
-    const response = await fetch('/categories');
-    const contentType = response.headers.get('Content-Type');
+      try {
+        const response = await fetch('/categories');
+        const contentType = response.headers.get('Content-Type');
 
-    if (!contentType || !contentType.includes('application/json')) {
-      throw new Error('Expected JSON response');
-    }
+        if (!contentType || !contentType.includes('application/json')) {
+          throw new Error('Expected JSON response');
+        }
 
-    const data = await response.json();
-    const categories = Array.isArray(data.Categories) ? data.Categories : data;
+        const data = await response.json();
+        const categories = Array.isArray(data.Categories) ? data.Categories : data;
 
-    const categoryList = document.getElementById('category-list');
-    categoryList.innerHTML = '';
+        const categoryList = document.getElementById('category-list');
+        categoryList.innerHTML = '';
 
-    categories.forEach(category => {
-      // Skip empty or malformed categories
-      if (!category || !category.cType) return;
+        categories.forEach(category => {
+          // Skip empty or malformed categories
+          if (!category || !category.cType) return;
 
-      // Support both color array and RGB fields
-      let r = 0, g = 0, b = 0;
-      if (Array.isArray(category.color) && category.color.length === 3) {
-        [r, g, b] = category.color;
-      } else if ('red' in category && 'green' in category && 'blue' in category) {
-        r = category.red;
-        g = category.green;
-        b = category.blue;
-      }
+          // Support both color array and RGB fields
+          let r = 0, g = 0, b = 0;
+          if (Array.isArray(category.color) && category.color.length === 3) {
+            [r, g, b] = category.color;
+          } else if ('red' in category && 'green' in category && 'blue' in category) {
+            r = category.red;
+            g = category.green;
+            b = category.blue;
+          }
 
-      const flexLabel = typeof category.flex === 'boolean'
-        ? (category.flex ? 'Flexible' : 'Fixed')
-        : (category.flex ?? 'Unknown');
+          const flexLabel = typeof category.flex === 'boolean'
+            ? (category.flex ? 'Flexible' : 'Fixed')
+            : (category.flex ?? 'Unknown');
 
-      const categoryBox = document.createElement('div');
-      categoryBox.classList.add('category-box');
-      categoryBox.innerHTML = `
+          const categoryBox = document.createElement('div');
+          categoryBox.classList.add('category-box');
+          categoryBox.innerHTML = `
         <strong>${category.cType}</strong><br>
         Color: rgb(${r}, ${g}, ${b})<br>
         Flexibility: ${flexLabel}<br>
         <div class="description">No additional description available.</div>
       `;
-      categoryBox.style.backgroundColor = `rgb(${r}, ${g}, ${b})`;
-      categoryList.appendChild(categoryBox);
-    });
-  } catch (error) {
-    console.error('Error loading categories:', error);
-  }
-}
+          categoryBox.style.backgroundColor = `rgb(${r}, ${g}, ${b})`;
+          categoryList.appendChild(categoryBox);
+        });
+      } catch (error) {
+        console.error('Error loading categories:', error);
+      }
+    }
 
     document.addEventListener('DOMContentLoaded', loadCategories);
   </script>
 
 </body>
+
 </html>

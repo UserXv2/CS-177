@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <title>PESP Dashboard</title>
@@ -10,6 +11,7 @@
       height: 100vh;
       overflow: hidden;
     }
+
 
     header {
       background-color: #a59c66;
@@ -24,6 +26,7 @@
       right: 0;
       height: 50px;
       z-index: 10;
+
     }
 
     header .left-buttons {
@@ -38,7 +41,7 @@
       cursor: pointer;
     }
 
-    
+
 
     .container {
       display: flex;
@@ -56,7 +59,8 @@
       gap: 10px;
     }
 
-    .left-panel select, .left-panel button {
+    .left-panel select,
+    .left-panel button {
       padding: 5px;
       margin-bottom: 10px;
     }
@@ -71,6 +75,17 @@
     .task.dark {
       background-color: #333;
       color: white;
+    }
+
+    .middle-panel button {
+      padding: 15px 30px;
+      margin: 15px;
+      background-color: lightgray;
+      border: none;
+      border-radius: 25px;
+      font-size: 16px;
+      cursor: pointer;
+
     }
 
     .middle-panel {
@@ -121,6 +136,8 @@
       align-items: center;
       gap: 10px;
       cursor: pointer;
+      text-decoration: none;
+      color: black;
     }
 
     .menu-item i {
@@ -128,13 +145,14 @@
     }
   </style>
 </head>
+
 <body>
 
   <header>
     <div class="left-buttons">
-      <button><strong>PESP</strong></button>
+      <a href="homepage"><button><strong>PESP</strong></button></a>
       <button>Sign in / log in</button>
-      <button>Home</button>
+      <a href="homepage"><button>Home</button></a>
     </div>
     <button class="menu-toggle" onclick="toggleMenu()">☰</button>
   </header>
@@ -159,32 +177,42 @@
       <div class="task">Task6</div>
       <div class="task">Task7</div> -->
       <div id="left-category-task-list">
-  <!-- Categories and tasks will be inserted here -->
-</div>
+        <!-- Categories and tasks will be inserted here -->
+      </div>
 
       <button>Rank</button>
-      <a href="category_view"><button>Category Management</button></a>
+      <button><a href="category_view">Category Management</a></button>
     </div>
 
     <!-- Middle Panel -->
     <div class="middle-panel">
       <h2>Welcome *User/Guest*</h2>
       <p>What would you like to do</p>
-      <button>First Time here (tutorial)</button>
-      <button>Import data from somewhere else?</button>
+      <a href="tips"><button>First Time here (tutorial)</button></a>
+      <!-- <button>Import data from somewhere else?</button> -->
+      <a href="category_Creator"><button>Import data from somewhere else?</button></a>
     </div>
   </div>
 
   <!-- Right Dropdown Menu -->
-  <div class="right-panel" id="rightMenu">
-    <button class="menu-item"><i>🏠</i> Home</button>
-    <button class="menu-item"><i>⚙️</i> Settings</button>
-    <button class="menu-item"><i>ℹ️</i> Tips</button>
-    <button class="menu-item"><i>💬</i> Feedback</button>
-    <button class="menu-item"><i>❓</i> Help</button>
-    <button class="menu-item"><i>📅</i> Calendar</button>
-  </div>
+  <!-- <div class="right-panel" id="rightMenu"> -->
+  <!--   <button class="menu-item"><i>🏠</i> Home</button> -->
 
+  <!--   <button class="menu-item"><i>⚙️</i> Settings</button> -->
+  <!--   <button class="menu-item"><i>ℹ️</i> Tips</button> -->
+  <!--   <button class="menu-item"><i>💬</i> Feedback</button> -->
+  <!--   <button class="menu-item"><i>❓</i> Help</button> -->
+  <!--   <button class="menu-item"><i>📅</i> Calendar</button> -->
+  <!-- </div> -->
+  <div class="right-panel" id="rightMenu">
+    <a href="homepage" class="menu-item"><i>🏠</i> Home</a>
+    <a href="settings" class="menu-item"><i>⚙️</i> Settings</a>
+    <a href="tips" class="menu-item"><i>ℹ️</i> Tips</a>
+    <a href="feedback" class="menu-item"><i>💬</i> Feedback</a>
+    <a href="help" class="menu-item"><i>❓</i> Help</a>
+    <a href="cal" class="menu-item"><i>📅</i> Calendar</a>
+    <a href="category_view" class="menu-item"><i>📂</i> Categories</a>
+  </div>
   <script>
     function toggleMenu() {
       const menu = document.getElementById('rightMenu');
@@ -193,63 +221,67 @@
 
 
     async function loadCategoriesAndTasks() {
-  // try {
-    const [catRes, taskRes] = await Promise.all([
-      fetch('/categories'),
-      fetch('/tasks')
-    ]);
+      // try {
+      const [catRes, taskRes] = await Promise.all([
+        fetch('/categories'),
+        fetch('/tasks')
+      ]);
 
-    const categories = await catRes.json();
-    const tasks = await taskRes.json();
+      const categories = await catRes.json();
+      const tasks = await taskRes.json();
 
-    const leftPanel = document.getElementById('left-category-task-list');
-    leftPanel.innerHTML = ''; // Clear existing content
+      const leftPanel = document.getElementById('left-category-task-list');
+      leftPanel.innerHTML = ''; // Clear existing content
 
-    console.log(categories)
+      console.log(categories)
 
-    categories['Categories'].forEach(cat => {
-      const categoryBlock = document.createElement('div');
-      categoryBlock.className = "categoryBlock";
-      const header = document.createElement('div');
-      header.className = "categoryHeader";
-      let r = 0, g = 0, b = 0;
-      if (Array.isArray(cat.color) && cat.color.length === 3) {
-        [r, g, b] = cat.color;
-      } else if ('red' in cat && 'green' in cat && 'blue' in cat) {
-        r = cat.red;
-        g = cat.green;
-        b = cat.blue;
-      }
-      header.style.backgroundColor = `rgb(${r}, ${g}, ${b})`;
-      header.innerHTML = `<strong>${cat.cType}</strong>`;
-      categoryBlock.appendChild(header);
-      if (tasks['tasks']) {
-      const relatedTasks = tasks['tasks'].filter(task => task['category'] === cat.cType);
-    console.log(relatedTasks)
+      categories['Categories'].forEach(cat => {
+        const categoryBlock = document.createElement('div');
+        categoryBlock.className = "categoryBlock";
+        const header = document.createElement('div');
+        header.className = "categoryHeader";
+        let r = 0, g = 0, b = 0;
+        if (Array.isArray(cat.color) && cat.color.length === 3) {
+          [r, g, b] = cat.color;
+        } else if ('red' in cat && 'green' in cat && 'blue' in cat) {
+          r = cat.red;
+          g = cat.green;
+          b = cat.blue;
+        }
+        header.style.backgroundColor = `rgb(${r}, ${g}, ${b})`;
+        header.innerHTML = `<strong>${cat.cType}</strong>`;
+        categoryBlock.appendChild(header);
+        if (tasks['tasks']) {
+          const relatedTasks = tasks['tasks'].filter(task => task['category'] === cat.cType);
+          console.log(relatedTasks)
 
-      relatedTasks.forEach(task => {
-        const taskDiv = document.createElement('div');
-        taskDiv.className = 'task';
-        taskDiv.textContent = task.details || 'Unnamed Task';
-        categoryBlock.appendChild(taskDiv);
+          relatedTasks.forEach(task => {
+            const taskDiv = document.createElement('div');
+              const taskLink = document.createElement('a');
+              taskLink.href = "/task/" + task['id'];
+              taskDiv.className = 'task';
+              taskLink.textContent = task.name || 'Unnamed Task';
+              categoryBlock.appendChild(taskDiv);
+              taskDiv.appendChild(taskLink);
+          });
+        } else {
+          const taskDiv = document.createElement('div');
+          taskDiv.className = 'task';
+          taskDiv.textContent = 'No Task';
+          categoryBlock.appendChild(taskDiv);
+        }
+        leftPanel.appendChild(categoryBlock);
+
       });
-    } else {
-      const taskDiv = document.createElement('div');
-        taskDiv.className = 'task';
-       taskDiv.textContent = 'No Task';
-      categoryBlock.appendChild(taskDiv);
+      // } catch (err) {
+      //   console.error("Error loading category-task list:", err);
+      // }
     }
-      leftPanel.appendChild(categoryBlock);
-    
-    });
-  // } catch (err) {
-  //   console.error("Error loading category-task list:", err);
-  // }
-}
 
-document.addEventListener('DOMContentLoaded', loadCategoriesAndTasks);
+    document.addEventListener('DOMContentLoaded', loadCategoriesAndTasks);
 
   </script>
 
 </body>
+
 </html>

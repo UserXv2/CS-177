@@ -231,11 +231,11 @@
       const b = document.querySelector('input[name="blue"]').value || 0;
 
       const redVal = document.querySelector('#redVal');
-      redVal.innerHTML = document.querySelector('input[name="red"]').value;
-      const greenVal = document.querySelector('#greenVal');
-      redVal.innerHTML = document.querySelector('input[name="green"]').value;
-      const blueVal = document.querySelector('#blueVal');
-      redVal.innerHTML = document.querySelector('input[name="blue"]').value;
+        redVal.innerHTML = document.querySelector('input[name="red"]').value;
+        const greenVal = document.querySelector('#greenVal');
+        greenVal.innerHTML = document.querySelector('input[name="green"]').value;
+        const blueVal = document.querySelector('#blueVal');
+        blueVal.innerHTML = document.querySelector('input[name="blue"]').value;
 
       const previewBox = document.getElementById('colorPreview');
       previewBox.style.backgroundColor = `rgb(${r}, ${g}, ${b})`;
