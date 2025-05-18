@@ -66,6 +66,9 @@ app.get('/task/:id', (req, res) => {
 
 });
 
+app.get('/', (req, res) => {
+  res.sendFile(path.join(__dirname, 'public/homepage.html'));
+});
 
 app.get('/homepage', (req, res) => {
   res.sendFile(path.join(__dirname, 'public/homepage.html'));
